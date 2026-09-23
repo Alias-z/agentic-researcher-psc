@@ -1,50 +1,47 @@
 # Start here
 
-This workshop uses Codex as a research assistant. You can complete the student activities with ordinary language; the assistant handles the browser and any code it needs.
+This workshop uses Codex as a research assistant. Students can complete the activities with ordinary language. Start with the official download pages, then set up the browser that Codex will use.
 
-## Set up the workshop browser
+## 1. Download the software
 
-The pictures below are **illustrations of the controls to find**, not captures of this computer's Settings screen. The app's layout may change; use the written setting names if it does.
+| Software | Official download page | Install |
+| --- | --- | --- |
+| Codex desktop | [ChatGPT desktop download](https://chatgpt.com/download/) | Install the current desktop app and select **Codex**. OpenAI says the app includes Codex; existing Codex app users can update to it. |
+| Google Chrome | [Google Chrome download](https://www.google.com/chrome/) | Install Chrome if you plan to use regular `@Chrome` as well as the workshop's built-in browser. |
+| Zotero | [Zotero download](https://www.zotero.org/download/) | Install Zotero desktop. The same official page links to **Zotero Connector**. |
 
-### 1. Enable Codex browser control
+Use the pages above rather than a copied installer file. The download buttons choose the current release for your computer.
 
-Open the Codex desktop app. In **Plugins**, install and enable **Browser** and **Computer Use** if prompted. For Computer Use, enable its server and skill toggles. Open the built-in browser in Codex's right-side view (`@Browser`). If Codex needs to operate a native Mac app window, grant the macOS **Screen Recording** and **Accessibility** permissions requested for Computer Use.
+## 2. Turn on Codex browser control
 
-![Illustration of the Browser and Computer Use plugins, with the Computer Use server and skill enabled](assets/codex-plugins-computer-use.png)
+In the desktop app, select **Codex**. Open **Plugins → Computer Use**, install or enable it if prompted, and turn on its **Computer-use** server and **Computer Use** skill. Open Codex's right-side built-in browser with `@Browser`. The [official Computer Use setup guide](https://learn.chatgpt.com/docs/computer-use#set-up-computer-use) shows these controls.
 
-### 2. Enable page-scoped CDP
+![Real screenshot of OpenAI's Computer Use setup documentation, showing its plugin controls](assets/openai-computer-use-setup-2026-09-23.jpg)
 
-In **Settings → Browser → Developer mode**, turn on **Enable full CDP access**. The course Zotero skill needs this to show a temporary save link on the publisher page. Review Codex's site access request when it appears. An organisation policy may prevent this setting from being enabled.
+*Captured from OpenAI's [Computer Use documentation](https://learn.chatgpt.com/docs/computer-use#set-up-computer-use) on 23 September 2026. This is the documentation page, not a screenshot of your settings.*
 
-![Illustration of Codex Settings showing Enable full CDP access turned on](assets/codex-browser-cdp.png)
+In **Settings → Browser → Developer mode**, turn on **Enable full CDP access**. The course Connector skill uses page-scoped CDP on the publisher article page. See the [official Browser guide](https://learn.chatgpt.com/docs/browser?surface=app#developer-mode).
 
-### 3. Put the Connector in the browser you use
+![Real screenshot of OpenAI's Browser documentation, showing the full CDP setting](assets/openai-browser-cdp-2026-09-23.jpg)
 
-Install the official **Zotero Connector in Codex's built-in browser**. The built-in browser has its own profile; an extension installed only in regular Chrome is not available there. Install the course's `zotero-connector-collect` skill as directed by the instructor. Sign in to your university library **in this same browser** if an article requires institutional access. Participants from ETH Zurich, the University of Zurich, and the University of Basel may see different access results.
+*Captured from OpenAI's [Browser documentation](https://learn.chatgpt.com/docs/browser?surface=app#developer-mode) on 23 September 2026.*
 
-![Illustration comparing Zotero Connector in the Codex built-in browser with the optional regular Chrome route](assets/browser-profile-connector.png)
+## 3. Install Zotero Connector in the workshop browser
 
-### 4. Prepare Zotero desktop
+In Codex's **Settings → Browser**, use the browser's extension controls to install **Zotero Connector** into the built-in browser profile. Start from [Zotero's download page](https://www.zotero.org/download/) and confirm the linked [Connector listing](https://chromewebstore.google.com/detail/zotero-connector/ekhagklcjbdpajgpjgmbionohlpdbjgc) names **Corporation for Digital Scholarship** as developer. Confirm the Connector is available in the right-side browser. Keep Zotero desktop open, create a `test` collection, and select it. OpenAI's public browser guide does not currently show the built-in extension installation controls, so follow the controls in the installed app rather than a screenshot of an older version.
 
-Open Zotero desktop. Create a collection named `test` and select it. In **Zotero → Settings → General → File Handling**, check **Automatically attach associated PDFs and other files when saving items**. This preference helps Zotero save PDFs when they are available; verify each article after saving.
+Install the course's `zotero-connector-collect` skill as directed by the instructor. If an article needs university access, sign in within the **same built-in browser profile**. An extension or university session in regular Chrome does not automatically appear in Codex's built-in browser. See [OpenAI's browser profile explanation](https://learn.chatgpt.com/docs/browser?surface=app).
 
-![Illustration of Zotero's automatic PDF attachment preference and a verified PDF in the test collection](assets/zotero-pdf-check.png)
+## 4. Connect regular Chrome only if you will use `@Chrome`
 
-## Readiness check
+In a regular Chrome profile, install the [ChatGPT browser extension offered by OpenAI](https://chromewebstore.google.com/detail/chatgpt/hehggadaopoacecdllhhajmbjkdcmajg). Install the [Zotero Connector](https://chromewebstore.google.com/detail/zotero-connector/ekhagklcjbdpajgpjgmbionohlpdbjgc) in that **same profile**. In Codex, open **Settings → Computer Use → Google Chrome** and follow **Install** if shown. A working connection shows **Manage**. The [official extension setup guide](https://learn.chatgpt.com/docs/chrome-extension#set-up-your-browser) explains this sequence, and [Google's extension instructions](https://support.google.com/chrome/answer/2664769?hl=en) show the installation prompts.
 
-Ask Codex to open an original publisher DOI page in `@Browser`, identify its title and DOI, and save it through Zotero Connector into `test`. Then ask Codex to verify in Zotero that the item has the matching DOI, belongs to `test`, and has a PDF attachment that opens. A saved citation without a PDF does not complete the full-text exercise. If an article has no available PDF, choose another example and report the limitation.
+![Real screenshot of OpenAI's Chrome extension documentation, showing the connected Google Chrome control](assets/openai-chrome-extension-2026-09-23.jpg)
 
-This test confirms the browser, Computer Use, Connector, Zotero, and institution-specific access together. A settings switch alone does not prove the full workflow works.
+*Captured from OpenAI's [browser extension documentation](https://learn.chatgpt.com/docs/chrome-extension#set-up-your-browser) on 23 September 2026. Installing Chrome alone does not connect it to Codex.*
 
-## If your class uses regular Chrome
+The tested workshop flow uses `@Browser` in Codex's right-side view. Chrome does not need to be your Mac's default browser for that flow.
 
-Regular Chrome is a **separate** route. Install Chrome and the **ChatGPT browser extension** in the Chrome profile you will use. In **Settings → Computer Use**, connect or enable **Google Chrome**; a connected browser shows **Manage**. Install the Zotero Connector in that same Chrome profile and invoke `@Chrome` in the task. The built-in-browser exercise above uses `@Browser` and does not require Chrome to be the Mac's default browser.
+## 5. Check the complete workflow
 
-Mac Screen Recording and Accessibility permissions are separate from browser site access. The literature exercise verifies Zotero through its local API rather than clicking in the Zotero desktop window.
-
-## Sources
-
-- [Codex built-in browser and CDP setting](https://learn.chatgpt.com/docs/browser)
-- [Computer Use setup and macOS permissions](https://learn.chatgpt.com/docs/computer-use)
-- [Regular Chrome connection](https://learn.chatgpt.com/docs/chrome-extension)
-- [Zotero automatic PDF attachment preference](https://www.zotero.org/support/preferences/general)
+Open an original publisher DOI page in `@Browser`. Ask Codex to save it through Zotero Connector into `test`, then verify the DOI, collection, and opening PDF attachment in Zotero. A citation without a PDF is incomplete for this exercise. If Codex cannot control a native Mac app window, check macOS **Screen Recording** and **Accessibility** permissions as described in the [Computer Use guide](https://learn.chatgpt.com/docs/computer-use#set-up-computer-use).

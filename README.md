@@ -19,7 +19,7 @@ agentic-researcher-psc/
 ├── workshop/                  Student-facing steps and exercises
 │   ├── 00-start-here.md
 │   ├── 01-literature-to-zotero.md
-│   └── assets/                 Illustrated setup screens (PNG with SVG sources)
+│   └── assets/                 Captures of official OpenAI setup documentation
 ├── skills/                    Reusable Codex skills; one folder per skill
 │   └── zotero-connector-collect/
 │       └── SKILL.md
