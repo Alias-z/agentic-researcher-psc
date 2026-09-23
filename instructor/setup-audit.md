@@ -2,6 +2,8 @@
 
 This is a functional check of the current teaching machine, not a claim that every student's machine is configured the same way. Use [the student setup guide](../workshop/00-start-here.md) for installation steps.
 
+The student guide's screen-style pictures are original illustrations. They show where to look, but they are not evidence that a switch is on in the current app session. Use the functional checks below for that distinction.
+
 | Requirement | Current observation |
 | --- | --- |
 | Codex built-in browser (`@Browser`) | Working. Codex can read and click publisher pages in the right-side browser. |

@@ -6,7 +6,7 @@ The workshop follows a research task from finding papers to checking sources, co
 
 ## Start here
 
-1. [Prepare Codex, browser access, and Zotero](workshop/00-start-here.md).
+1. [Prepare Codex, browser access, and Zotero with illustrated steps](workshop/00-start-here.md).
 2. [Find, collect, and verify a paper](workshop/01-literature-to-zotero.md).
 
 The first reusable skill is [zotero-connector-collect](skills/zotero-connector-collect/SKILL.md). It tells Codex how to activate the installed official Zotero Connector from the publisher page and how to verify the saved record and PDF. The repository copy is the version to distribute; students should receive it through a course installation package rather than editing it.
@@ -18,7 +18,8 @@ agentic-researcher-psc/
 ├── README.md
 ├── workshop/                  Student-facing steps and exercises
 │   ├── 00-start-here.md
-│   └── 01-literature-to-zotero.md
+│   ├── 01-literature-to-zotero.md
+│   └── assets/                 Illustrated setup screens (PNG with SVG sources)
 ├── skills/                    Reusable Codex skills; one folder per skill
 │   └── zotero-connector-collect/
 │       └── SKILL.md
