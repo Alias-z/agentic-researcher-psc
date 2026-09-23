@@ -23,7 +23,8 @@ agentic-researcher-psc/
 │   └── zotero-connector-collect/
 │       └── SKILL.md
 └── instructor/                Rationale, timing, and facilitator notes
-    └── course-alignment.md
+    ├── course-alignment.md
+    └── setup-audit.md
 ```
 
 As the exercises are developed, add `workshop/02-paper-synthesis.md`, `workshop/03-data-analysis.md`, and `workshop/04-present-results.md`. Put small public or synthetic inputs in `examples/` only when those exercises need them. Add a skill when its workflow has been tested, rather than creating empty skill folders.
@@ -33,3 +34,5 @@ As the exercises are developed, add `workshop/02-paper-synthesis.md`, `workshop/
 The literature-to-Zotero action has been tested in Codex's built-in browser with the official Zotero Connector. Two publisher articles saved with metadata and PDF attachments; a third saved metadata without a PDF. The lesson requires checking each outcome. Data analysis and result-presentation exercises are planned but not yet built.
 
 This is a local Git repository. It has no remote or public release yet. The lecturer kickoff PDF is an input to the plan and is not included in the student materials.
+
+The [instructor setup audit](instructor/setup-audit.md) records what was verified on the teaching machine and what still needs a Settings check.
