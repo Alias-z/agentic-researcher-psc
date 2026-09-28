@@ -45,15 +45,15 @@
 
     <fieldset>
       <legend>Search tools — choose any</legend>
-      <label class="choice"><input type="checkbox" name="tools" value="codex-research" {{CODEX_RESEARCH_CHECKED}}> Codex research (native web search)</label>
+      <label class="choice"><input type="checkbox" name="tools" value="codex-research" {{CODEX_RESEARCH_CHECKED}}> Codex research</label>
       <label class="choice"><input type="checkbox" name="tools" value="scite" {{SCITE_CHECKED}}> Scite</label>
       <label class="choice"><input type="checkbox" name="tools" value="consensus" {{CONSENSUS_CHECKED}}> Consensus</label>
       <label class="choice"><input type="checkbox" name="tools" value="semantic-scholar" {{SEMANTIC_SCHOLAR_CHECKED}}> Semantic Scholar</label>
       <label class="choice"><input type="checkbox" name="tools" value="google-scholar" {{GOOGLE_SCHOLAR_CHECKED}}> Google Scholar</label>
-      <label class="choice"><input type="checkbox" name="tools" value="google-scholar-labs" {{GOOGLE_SCHOLAR_LABS_CHECKED}}> Google Scholar Labs (Google sign-in may be required)</label>
+      <label class="choice"><input type="checkbox" name="tools" value="google-scholar-labs" {{GOOGLE_SCHOLAR_LABS_CHECKED}}> Google Scholar Labs</label>
       <label class="choice"><input type="checkbox" name="tools" value="scopus-ai" {{SCOPUS_AI_CHECKED}}> Scopus AI</label>
       <label class="choice"><input type="checkbox" name="tools" value="pubmed" {{PUBMED_CHECKED}}> PubMed</label>
-      <label class="choice"><input type="checkbox" name="tools" value="uniprot" {{UNIPROT_CHECKED}}> UniProt (protein-related literature)</label>
+      <label class="choice"><input type="checkbox" name="tools" value="uniprot" {{UNIPROT_CHECKED}}> UniProt</label>
     </fieldset>
 
     <fieldset>
@@ -70,10 +70,9 @@
     </fieldset>
 
     <fieldset>
-      <legend>Browser display</legend>
-      <label class="choice"><input type="radio" name="tab_mode" value="visible" {{VISIBLE_CHECKED}}> Visible — show browser pages in Codex's right-side preview</label>
-      <label class="choice"><input type="radio" name="tab_mode" value="background" {{BACKGROUND_CHECKED}}> Background — browser pages stay out of the preview</label>
-      <span class="hint">Search uses APIs first. Browser pages open only when needed.</span>
+      <legend>Search mode</legend>
+      <label class="choice"><input type="radio" name="tab_mode" value="visible" {{VISIBLE_CHECKED}}> Visible — browser searches in Codex preview</label>
+      <label class="choice"><input type="radio" name="tab_mode" value="background" {{BACKGROUND_CHECKED}}> Background — APIs first, browser fallback</label>
     </fieldset>
 
     <label class="field">Maximum papers per tool

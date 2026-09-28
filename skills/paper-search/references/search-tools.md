@@ -2,9 +2,11 @@
 
 ## Retrieval priority
 
-Try the selected source's official API or provider MCP tool before browser retrieval. This priority applies to both display modes. The browser tests below document fallbacks, not mandatory first steps. PubMed and UniProt API searches are live-tested; the Scite and Consensus tool contracts below were inspected, so read their current schemas and check access when selected.
+In **visible mode**, search each selected scholarly website in Codex's visible preview using the browser controls, cards, and pagination documented below. Use metadata APIs only to fill missing fields; retain the browser discovery source and rank. Codex research has no browser search UI and uses native web search in either mode.
 
-| Source | First route | Browser fallback |
+In **background mode**, try the selected source's official API or provider MCP tool first, then use browser fallback when needed. The table below applies to background discovery. PubMed and UniProt API searches are live-tested; the Scite and Consensus tool contracts below were inspected, so read their current schemas and check access when selected.
+
+| Source | Background first route | Background browser fallback |
 | --- | --- | --- |
 | PubMed | Bundled `scholarly_metadata.py pubmed`: ESearch and batch EFetch; paginate with `next_start`. | API unavailable or a required fact remains missing. Keep API order when it works, even if website order differs. |
 | UniProt | Bundled `scholarly_metadata.py uniprot`: literature citations API; follow `next_url`. | API unavailable or incomplete for the user's question. |

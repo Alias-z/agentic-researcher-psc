@@ -15,7 +15,7 @@ from urllib.request import urlopen
 
 TOOLS = ("codex-research", "scite", "consensus", "semantic-scholar", "google-scholar",
          "google-scholar-labs", "scopus-ai", "pubmed", "uniprot")
-DEFAULT_TOOLS = ("scite", "consensus", "semantic-scholar")
+DEFAULT_TOOLS = ("google-scholar", "pubmed", "semantic-scholar")
 TEMPLATE = (Path(__file__).resolve().parent.parent / "assets" / "search-form.html").read_text()
 
 
