@@ -7,6 +7,8 @@ description: Search papers in visible browser tabs or use APIs first in backgrou
 
 Use this skill to show research papers returned by selected sources. Keep each source's result order; do not judge which tool is better or save items to Zotero. The tested routes are **Codex native web search, Scite, Consensus, Semantic Scholar, Google Scholar, Google Scholar Labs, Scopus AI, PubMed, and UniProt literature**. Read [tested search routes](references/search-tools.md) for source-specific controls, metadata fields, and limits.
 
+For a later request to save selected papers, use **zotero-save** and its publisher Connector workflow. The optional **Zotero plugin** handles existing-library searches, citation exports, and supplied BibTeX/RIS imports. Do not substitute those imports for publisher/PDF saves or require the plugin for this skill's optional Zotero exclusion.
+
 ## Before searching
 
 In local Codex desktop, show the bundled [search form](assets/search-form.html) in a **visible right-side Codex browser tab** before opening any search results. Use `python3` if it is available; otherwise call `load_workspace_dependencies` and use the Python executable it returns. Run that interpreter on `scripts/intake.py --output <unique temporary JSON path>` from this skill's directory; the script uses only Python's standard library and prints a one-use `http://127.0.0.1` URL. Do not require the student to install Python. If neither interpreter is available, use the chat fallback below and say the checkbox form could not run.

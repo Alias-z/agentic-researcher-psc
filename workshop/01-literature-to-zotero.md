@@ -17,8 +17,10 @@ If a tool asks for sign-in, sign in through the Codex browser tab and tell Codex
 
 ## 2. Save selected papers
 
-Create a `test` collection in Zotero and keep Zotero desktop open. In the **same Codex task**, paste:
+Keep Zotero desktop open. In the **same Codex task**, paste:
 
-> Use `zotero-save` to save papers **[numbers from the table]**. Ask me which collection and tab mode to use before you start. Report each DOI and whether its PDF opens in Zotero.
+> Use `zotero-save` to save papers **[numbers from the table]** to a collection called `test`. Create it if missing. Use visible tabs. Report each DOI and whether its PDF opens in Zotero.
+
+These skills find and save papers through Zotero Connector. Use the Codex Zotero plugin afterward to read saved papers' indexed text and work with citations.
 
 Check the title, DOI, and collection in Zotero, then open the attached PDF.

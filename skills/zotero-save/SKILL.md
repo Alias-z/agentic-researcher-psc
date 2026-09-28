@@ -1,15 +1,41 @@
 ---
 name: zotero-save
-description: Save user-selected paper DOIs or publisher pages to a Zotero collection through Zotero Connector, then verify each record and PDF.
+description: Save selected publisher papers and available PDFs through Zotero Connector in Codex's browser, create or select the destination collection, and verify results. Not for library-wide searches, citation exports, or BibTeX/RIS imports.
 ---
 
 # Save selected papers with Zotero Connector
 
-Use this for papers the user has selected by DOI, publisher URL, or position in a prior search result. Do not perform a new topic search. Keep each publisher DOI page in Codex's built-in browser so its institutional session is available to the official Zotero Connector. Zotero desktop must be running, the Connector installed in the built-in browser, and page-scoped CDP access enabled. The student does not need to run code.
+Use this for papers the user has selected by DOI, publisher URL, or position in a prior search result. Do not perform a new topic search. Keep each publisher DOI page in Codex's built-in browser so its institutional session is available to the official Zotero Connector. Zotero desktop must be running, the Connector installed in the built-in browser, and page-scoped CDP access enabled. This skill uses Zotero desktop's built-in local server directly; it does not require a Codex Zotero plugin, a separately configured MCP server, or a zotero.org API key. The student does not need to run code.
+
+An explicit request to use **zotero-save** uses this workflow throughout. The optional **Zotero plugin** handles existing-library and citation tasks; its BibTeX/RIS imports are not a substitute for publisher Connector saves with PDF verification. Do not install it to resolve this skill's connection or collection steps. Read [Zotero routes](references/tool-routing.md) when both capabilities are available or their roles are unclear.
 
 ## Before saving
 
 Before opening publisher tabs, ask for any missing choices in one short question and wait for the answer: which papers to save, the destination Zotero collection, and whether to use visible Codex preview tabs (recommended) or background tabs. Use choices already given without asking again. If the user says "use default tabs," use visible tabs. Do not treat papers returned by `paper-search` as automatically selected for saving.
+
+### Check Zotero and the destination
+
+Run the bundled, non-mutating helper before publisher work, using `python3` or the Python executable from `load_workspace_dependencies` if needed:
+
+```text
+python scripts/check_zotero.py --collection "USER'S COLLECTION"
+```
+
+It probes desktop Connector ping, local collection access, and the selected destination directly on `127.0.0.1:23119`, bypassing HTTP proxies. For a group library add `--library /api/groups/<groupID>`; add `--parent-key <key>` when resolving a particular subcollection, or `--parent-key ""` for top level. It does not edit preferences, create collections, or save papers. `local_checks_passed` verifies only the local HTTP routes; browser extension and Computer Use access remain separate checks.
+
+Act on the measured result:
+
+- **connection_refused:** open Zotero desktop with available native controls and retry once. A closed desktop port is separate from a missing browser extension or plugin.
+- **access_denied (403):** check Zotero's **Settings → Advanced → Allow other applications on this computer to communicate with Zotero** and the requested library's access. Enable the setting if it is off. If it is already on, report the denied endpoint and check the running Zotero instance; do not keep asking the user to enable it or claim it is disabled.
+- **endpoint_unavailable (404), timeout, transport_error, or unexpected_response:** retain the exact route, status, and returned Zotero version for diagnosis. Do not turn these into a generic “Zotero server not connected” or change preferences without evidence.
+
+A working desktop Connector server does not prove local library access or that the browser extension is installed. A plugin/MCP error does not prove the desktop server is down. Report the specific failed check; keep passing checks intact. This skill needs local reads to verify the record, collection, and PDF even if Connector saving alone is possible.
+
+Resolve the requested collection and its parent/library before saving. A `missing` destination means create it; it is not a connection error. An `ambiguous` destination needs a parent/library choice. If creation or selection is needed, call `cua.getApp("Zotero")`, read the native app state, and use the current **New Collection…** control and name field. Use fresh observed control IDs, never IDs copied from another session. A named destination in an authorized save request permits creating that destination when absent; use **New Subcollection…** under the specified parent when needed. Verify the resulting collection key by rerunning the helper. If native controls are actually unavailable, ask the user to create/select it and wait. Do not claim creation is unsupported merely because a plugin has no creation command or an older local API lacks writes.
+
+Select the destination in Zotero desktop before activating the Connector. `POST /connector/getSelectedCollection` with JSON `{}` reports the current target and whether it is editable; verify the requested library/collection. Its internal IDs differ from local API collection keys. Keep publisher browsing in Codex's preview. Stop if the destination cannot be selected or is not writable; do not silently save to My Library or a different collection.
+
+Before saving, establish all three independently: local reads/Connector server work, the exact writable destination is selected, and publisher tabs have the browser controls/CDP required below. Check the browser extension through the actual save interception; the helper does not test it. After a failed click, check the destination for an item before retrying. Keep metadata-only results distinct from verified PDFs.
 
 ## Save
 
@@ -24,6 +50,8 @@ Zotero's [Connector source](https://github.com/zotero/zotero-connectors/blob/mas
 
 ## Verify locally
 
-With Zotero desktop running, its read-only local API can list `GET http://127.0.0.1:23119/api/users/0/collections?format=json`, `GET /api/users/0/collections/{collectionKey}/items?format=json`, and `GET /api/users/0/items/{itemKey}/children?format=json`. Match the collection and DOI exactly. For a PDF, check that the attachment has `contentType: application/pdf` and a filename. Where local file access is available, confirm that the saved attachment file exists and is a PDF. These checks inspect the Zotero save; they do not download a separate publisher PDF.
+With Zotero desktop running and local API access enabled, read `GET http://127.0.0.1:23119/api/users/0/collections?format=json`, `GET /api/users/0/collections/{collectionKey}/items?format=json`, and `GET /api/users/0/items/{itemKey}/children?format=json` for My Library. For a group destination, use the returned collection's `/api/groups/{groupID}/` library prefix. Match the collection and DOI exactly. For a PDF, check that the attachment has `contentType: application/pdf` and a filename. Where local file access is available, confirm that the saved attachment file exists and is a PDF. These checks inspect the Zotero save; they do not download a separate publisher PDF. See [local API requirements](https://www.zotero.org/support/dev/web_api/v3/local_api) and [collection controls](https://www.zotero.org/support/collections_and_tags#creating_collections).
 
 The first observed test on 23 September 2026 saved `10.1111/pce.70864` with a PDF. A fresh-paper test saved `10.1111/pce.70548` with a PDF. Another article, `10.1111/pce.70862`, produced a record without an attachment, so verify every paper individually.
+
+The 23 September saves used an existing `test` collection. In a separate session on 28 September, Codex created **CLL** through Zotero desktop's native collection dialog using `cua.getApp("Zotero")`, clicks, and `setValue`; a direct local API read verified the new collection. That session then saved four distinct papers through the browser Connector and verified all four PDF files. No Codex Zotero plugin was used. Separate direct Connector ping, collection listing, and selected-target checks also returned HTTP 200 on the teaching Mac.

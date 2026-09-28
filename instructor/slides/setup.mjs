@@ -62,9 +62,12 @@ async function screenshot(slide, name, sourceWidth, sourceHeight, box) {
   const ratio = Math.min(box.width / sourceWidth, box.height / sourceHeight);
   const width = sourceWidth * ratio;
   const height = sourceHeight * ratio;
+  const sourcePath = path.join(repo, 'workshop/assets', name);
+  const source = name.endsWith('.svg')
+    ? { svg: await fs.readFile(sourcePath, 'utf8') }
+    : { blob: new Uint8Array(await fs.readFile(sourcePath)), contentType: 'image/png' };
   slide.images.add({
-    blob: new Uint8Array(await fs.readFile(path.join(repo, 'workshop/assets', name))),
-    contentType: 'image/png', alt: name, fit: 'contain',
+    ...source, alt: name, fit: 'contain',
     position: {
       left: box.left + (box.width - width) / 2,
       top: box.top + (box.height - height) / 2,
@@ -133,6 +136,17 @@ text(slide, 'In Codex’s browser, open Chrome Web Store and install Zotero Conn
 await screenshot(slide, 'codex-zotero-connector-installed-marked-2026-09-23.png', 2752, 1144,
   { left: 64, top: 166, width: 1152, height: 495 });
 
+slide = page('Zotero access',
+  'Screenshot supplied by the instructor: Screenshot 2026-09-28 at 18.00.10.png. '
+  + 'Source: https://www.zotero.org/support/dev/web_api/v3/local_api. '
+  + 'The original screenshot is preserved; the SVG adds red outlines and crops unrelated settings.');
+text(slide, 'In Zotero Settings → Advanced, enable the highlighted option.',
+  64, 108, 1152, 36, 25);
+await screenshot(slide, 'zotero-local-access-marked-2026-09-28.svg', 901, 322,
+  { left: 64, top: 166, width: 1152, height: 430 });
+text(slide, 'Keep Zotero desktop open so Codex can check your library and read saved text.',
+  64, 622, 1152, 36, 25, { color: muted });
+
 slide = page('Skill installation', 'Source: workshop/00-start-here.md. Repository: https://github.com/Alias-z/agentic-researcher-psc');
 text(slide, 'In Codex, type @ and select skill-installer. Then paste:', 64, 117, 1152, 45, 28);
 slide.shapes.add({ geometry: 'rect',
@@ -145,8 +159,23 @@ text(slide, 'https://github.com/Alias-z/agentic-researcher-psc', 92, 302, 1096, 
   { ...codeFont, link: 'https://github.com/Alias-z/agentic-researcher-psc' });
 text(slide, 'If python3 is unavailable, use the Python executable from', 92, 381, 1096, 38, 26, codeFont);
 text(slide, 'load_workspace_dependencies for the installer.', 92, 423, 1096, 38, 26, codeFont);
-text(slide, 'After installation, type @ to find paper-search and zotero-save.',
+text(slide, 'To use a skill later, type @ and select paper-search or zotero-save.',
   64, 560, 1152, 38, 25, { color: muted });
+
+slide = page('Zotero plugin',
+  'Screenshot supplied by the instructor: Screenshot 2026-09-28 at 19.08.39.png. '
+  + 'Plugin installation: https://learn.chatgpt.com/docs/plugins. '
+  + 'Reading and citation capabilities were checked against the installed Zotero 0.1.2 skill and helper. '
+  + 'The plugin reads indexed attachment text; it does not replace our publisher Connector/PDF save workflow. '
+  + 'The original screenshot is preserved; the SVG adds red outlines and crops the recent chat list.');
+text(slide, 'In Codex Plugins, search "zotero" and install Zotero for use in later chats.',
+  64, 108, 1152, 36, 25);
+await screenshot(slide, 'codex-zotero-plugin-marked-2026-09-28.svg', 1115, 340,
+  { left: 64, top: 164, width: 1152, height: 385 });
+text(slide, 'paper-search finds papers; zotero-save saves selected papers and available PDFs.',
+  64, 581, 1152, 36, 25);
+text(slide, 'The Zotero plugin reads their indexed text and helps with citations.',
+  64, 625, 1152, 36, 25);
 
 const candidatePath = path.join(buildDir, 'candidate.pptx');
 await (await PresentationFile.exportPptx(deck)).save(candidatePath);
