@@ -1,15 +1,24 @@
-# From a research question to a verified Zotero paper
+# Search papers and save to Zotero
 
-## Task
+Complete [setup](00-start-here.md) first.
 
-Choose a topic from your field. Ask Codex to find two recent research articles, assess their relevance, open each original publisher DOI page in Codex's right-side browser, and collect them with Zotero Connector into `test`.
+## 1. Find papers
 
-Suggested prompt:
+> Use `paper-search` and show me the search form in Codex's right-side browser.
 
-> Find two recent research articles about **[my topic]**. Show why each one is relevant and identify the original publisher DOI page. Use Codex's built-in browser and my institutional access where available. Save each article through the installed Zotero Connector into my `test` collection. Check the DOI, collection, and PDF attachment in Zotero. Tell me clearly if a PDF was not attached or if access is unavailable. Do not claim a save succeeded until you have checked it.
+1. Enter a topic. Add context or filters if needed, such as “published after 2016” or “original studies only.”
+2. Tick the search tools and set **Maximum papers per tool**.
+3. Choose **Visible** to watch in Codex's right-side preview, or **Background**. Keep this task open when using visible tabs.
+4. Choose **Results by source** for separate lists, or **Combined list** to remove duplicates across tools.
+5. To exclude saved papers, open Zotero and tick **Only show papers not in Zotero**.
+6. Click **Start search**.
 
-## Check the result
+If a tool asks for sign-in, sign in through the Codex browser tab and tell Codex when done, or ask to skip that tool.
 
-For each paper, confirm the publisher title and DOI match Zotero's item. Check that the item belongs to `test`, and that its PDF attachment opens. A citation record without a PDF is an incomplete result for this exercise. Note the access label: “Full Access” through a university subscription and “Open Access” describe different routes to the paper.
+## 2. Save selected papers
 
-Compare Codex's relevance explanation with the article abstract. Keep a short note of what you checked and what remains uncertain. The assistant can help find and organise literature; you remain responsible for deciding whether a source supports your research claim.
+Create a `test` collection in Zotero and keep Zotero desktop open. In the **same Codex task**, paste:
+
+> Use `zotero-save` to save papers **[numbers from the table]**. Ask me which collection and tab mode to use before you start. Report each DOI and whether its PDF opens in Zotero.
+
+Check the title, DOI, and collection in Zotero, then open the attached PDF.

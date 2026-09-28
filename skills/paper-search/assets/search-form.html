@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Paper search</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    body { max-width: 680px; margin: 0 auto; padding: 28px 20px 48px; line-height: 1.45; }
+    h1 { margin: 0 0 6px; font-size: 1.65rem; }
+    p { margin: 0 0 22px; color: color-mix(in srgb, currentColor 72%, transparent); }
+    .field { display: block; margin: 0 0 20px; font-weight: 600; }
+    .field input, .field textarea { box-sizing: border-box; width: 100%; margin-top: 7px; padding: 10px 12px; font: inherit; border: 1px solid gray; border-radius: 7px; background: Canvas; color: CanvasText; }
+    .field textarea { min-height: 100px; resize: vertical; }
+    .hint { display: block; margin-top: 5px; font-size: .9rem; font-weight: 400; opacity: .75; }
+    fieldset { margin: 0 0 20px; padding: 12px 16px 15px; border: 1px solid gray; border-radius: 7px; }
+    legend { padding: 0 5px; font-weight: 600; }
+    .choice { display: flex; align-items: center; gap: 10px; padding: 5px 0; }
+    .choice input { width: 18px; height: 18px; margin: 0; }
+    .zotero-status { margin: 4px 0 8px; font-weight: 650; }
+    .zotero-status.connected { color: #167b38; }
+    .zotero-status.unavailable { color: #b3312c; }
+    .zotero-status.unchecked { opacity: .75; }
+    @media (prefers-color-scheme: dark) {
+      .zotero-status.connected { color: #75db91; }
+      .zotero-status.unavailable { color: #ff8982; }
+    }
+    button { padding: 11px 18px; font: inherit; font-weight: 650; border: 0; border-radius: 7px; background: #245fb8; color: white; }
+    button:hover { background: #184b94; }
+  </style>
+</head>
+<body>
+  <h1>Find research papers</h1>
+  <p>Describe your question, choose the sources, then start the search.</p>
+  <form method="post" action="/submit">
+    <input type="hidden" name="token" value="{{TOKEN}}">
+
+    <label class="field">Topic of interest
+      <input name="topic" type="text" maxlength="240" required placeholder="e.g. speedy stomata" value="{{TOPIC}}">
+    </label>
+
+    <label class="field">What are you trying to find out? <span class="hint">Optional: add context and filters, such as published after 2016, original studies only, or exclude reviews.</span>
+      <textarea name="context" maxlength="2000" placeholder="e.g. Speedy stomata means rapid opening under fluctuating light. Include original studies published after 2016; exclude reviews.">{{CONTEXT}}</textarea>
+    </label>
+
+    <fieldset>
+      <legend>Search tools — choose any</legend>
+      <label class="choice"><input type="checkbox" name="tools" value="codex-research" {{CODEX_RESEARCH_CHECKED}}> Codex research (native web search)</label>
+      <label class="choice"><input type="checkbox" name="tools" value="scite" {{SCITE_CHECKED}}> Scite</label>
+      <label class="choice"><input type="checkbox" name="tools" value="consensus" {{CONSENSUS_CHECKED}}> Consensus</label>
+      <label class="choice"><input type="checkbox" name="tools" value="semantic-scholar" {{SEMANTIC_SCHOLAR_CHECKED}}> Semantic Scholar</label>
+      <label class="choice"><input type="checkbox" name="tools" value="google-scholar" {{GOOGLE_SCHOLAR_CHECKED}}> Google Scholar</label>
+      <label class="choice"><input type="checkbox" name="tools" value="google-scholar-labs" {{GOOGLE_SCHOLAR_LABS_CHECKED}}> Google Scholar Labs (Google sign-in may be required)</label>
+      <label class="choice"><input type="checkbox" name="tools" value="scopus-ai" {{SCOPUS_AI_CHECKED}}> Scopus AI</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Results view</legend>
+      <label class="choice"><input type="radio" name="result_mode" value="compare" {{COMPARE_CHECKED}}> Results by source — show each tool's papers</label>
+      <label class="choice"><input type="radio" name="result_mode" value="ranked" {{RANKED_CHECKED}}> Combined list — remove papers repeated across tools</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Zotero library</legend>
+      <div id="zotero-status" role="status" class="zotero-status {{ZOTERO_STATUS_CLASS}}">{{ZOTERO_STATUS_TEXT}}</div>
+      <label class="choice"><input id="zotero-exclude" type="checkbox" name="only_not_in_zotero" value="1" {{ONLY_NOT_IN_ZOTERO_CHECKED}}> Only show papers not in Zotero (My Library)</label>
+      <span class="hint">Zotero is checked only when this box is selected. If unavailable, Codex will wait for access before filtering.</span>
+    </fieldset>
+
+    <fieldset>
+      <legend>Show search tabs</legend>
+      <label class="choice"><input type="radio" name="tab_mode" value="visible" {{VISIBLE_CHECKED}}> Visible — show every search page in Codex's right-side preview</label>
+      <label class="choice"><input type="radio" name="tab_mode" value="background" {{BACKGROUND_CHECKED}}> Background — search pages stay out of the preview</label>
+    </fieldset>
+
+    <label class="field">Maximum papers per tool
+      <input name="max_papers" type="number" min="1" max="50" required value="{{MAX_PAPERS}}">
+    </label>
+
+    <button type="submit">Start search</button>
+  </form>
+  <script>
+    const zoteroExclude = document.getElementById('zotero-exclude');
+    async function refreshZoteroStatus() {
+      const status = document.getElementById('zotero-status');
+      if (!zoteroExclude.checked) {
+        status.className = 'zotero-status unchecked';
+        status.textContent = '⚪ Zotero not checked';
+        return;
+      }
+      try {
+        const response = await fetch('/zotero-status', { cache: 'no-store' });
+        if (!response.ok) return;
+        const connected = (await response.json()).connected;
+        status.className = `zotero-status ${connected ? 'connected' : 'unavailable'}`;
+        status.textContent = connected
+          ? '🟢 Zotero connected — My Library accessible'
+          : '🔴 Zotero unavailable — open Zotero or enable its local API';
+      } catch (_) { /* The one-use form server may have exited. */ }
+    }
+    zoteroExclude.addEventListener('change', refreshZoteroStatus);
+    setInterval(refreshZoteroStatus, 3000);
+  </script>
+</body>
+</html>

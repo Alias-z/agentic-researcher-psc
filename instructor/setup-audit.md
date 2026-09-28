@@ -1,13 +1,11 @@
 # Instructor setup audit — 23 September 2026
 
-This is a functional check of the current teaching machine, not a claim that every student's machine is configured the same way. Use [the student setup guide](../workshop/00-start-here.md) for installation steps.
-
-The student guide uses screenshots from this Mac's Codex settings. They show the settings on 23 September 2026; students must check their own machines.
+Observations from the teaching Mac. [Student setup instructions](../workshop/00-start-here.md).
 
 | Requirement | Current observation |
 | --- | --- |
 | Codex built-in browser (`@Browser`) | Working. Codex can read and click publisher pages in the right-side browser. |
-| Browser and Computer Use capability | Working in the built-in browser. A local screenshot shows **Any App** on and Google Chrome connected. The plugin server and skill toggles are not shown. |
+| Browser and Computer Use capability | Working in the built-in browser. A local screenshot shows **Any App** on and Google Chrome connected. The student instructions follow this settings page. |
 | **Enable full CDP access** | A local screenshot shows the switch on under **Computer use → Google Chrome**. Page-scoped CDP `Runtime.evaluate` also succeeded on a live Wiley DOI tab in the built-in browser. |
 | Zotero Connector in the built-in browser | A local screenshot shows Zotero Connector installed and enabled. Agent-triggered Connector saves produced metadata and PDFs for `10.1111/pce.70864` and `10.1111/pce.70548`; `10.1111/pce.70862` saved metadata without a PDF. |
 | Zotero desktop and `test` collection | Zotero is running. Its read-only local API responds, and `test` exists. |
@@ -17,4 +15,14 @@ The student guide uses screenshots from this Mac's Codex settings. They show the
 | Regular Chrome connection to Codex | A local screenshot shows **Google Chrome: Browser extension installed** with **Manage**. The `@Chrome` Zotero workflow has not been tested for this exercise. |
 | macOS Screen Recording and Accessibility | Individual permission values were not inspected. Check them if the class will ask Codex to control native app windows. |
 
-The practical pass criterion is one article saved through the **official Connector from its publisher DOI page**, with the expected DOI and a working PDF child attachment in the requested Zotero collection. Do not count a visible PDF link on the publisher page as proof that Zotero attached it.
+**Pass:** Save one article through Zotero Connector from its publisher DOI page. Verify its DOI and collection, then open the PDF attachment in Zotero.
+
+## Slide review — 28 September 2026
+
+- Setup instructions were checked against the saved teaching screenshots. Direct inspection of Codex's own settings was blocked by Computer Use.
+- Removed the separate plugin configuration step from the Computer Use slide. The slide now describes **Settings → Computer use → Any App**.
+- Confirmed the download pages, clarified selecting Codex after sign-in, and kept Zotero Connector installation inside Codex's browser.
+- The local `skill-installer` instructions say installed skills become available on the next turn. The guide now asks students to find them with `@` after installation.
+- The distributed skills are `skills/paper-search` and `skills/zotero-save`, replacing `skills/zotero-connector-collect`.
+
+References: [desktop setup](https://learn.chatgpt.com/docs/quickstart), [browser and CDP](https://learn.chatgpt.com/docs/browser), [Computer Use](https://learn.chatgpt.com/docs/computer-use).
