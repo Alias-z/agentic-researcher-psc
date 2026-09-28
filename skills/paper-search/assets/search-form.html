@@ -52,6 +52,8 @@
       <label class="choice"><input type="checkbox" name="tools" value="google-scholar" {{GOOGLE_SCHOLAR_CHECKED}}> Google Scholar</label>
       <label class="choice"><input type="checkbox" name="tools" value="google-scholar-labs" {{GOOGLE_SCHOLAR_LABS_CHECKED}}> Google Scholar Labs (Google sign-in may be required)</label>
       <label class="choice"><input type="checkbox" name="tools" value="scopus-ai" {{SCOPUS_AI_CHECKED}}> Scopus AI</label>
+      <label class="choice"><input type="checkbox" name="tools" value="pubmed" {{PUBMED_CHECKED}}> PubMed</label>
+      <label class="choice"><input type="checkbox" name="tools" value="uniprot" {{UNIPROT_CHECKED}}> UniProt (protein-related literature)</label>
     </fieldset>
 
     <fieldset>
@@ -68,9 +70,10 @@
     </fieldset>
 
     <fieldset>
-      <legend>Show search tabs</legend>
-      <label class="choice"><input type="radio" name="tab_mode" value="visible" {{VISIBLE_CHECKED}}> Visible — show every search page in Codex's right-side preview</label>
-      <label class="choice"><input type="radio" name="tab_mode" value="background" {{BACKGROUND_CHECKED}}> Background — search pages stay out of the preview</label>
+      <legend>Browser display</legend>
+      <label class="choice"><input type="radio" name="tab_mode" value="visible" {{VISIBLE_CHECKED}}> Visible — show browser pages in Codex's right-side preview</label>
+      <label class="choice"><input type="radio" name="tab_mode" value="background" {{BACKGROUND_CHECKED}}> Background — browser pages stay out of the preview</label>
+      <span class="hint">Search uses APIs first. Browser pages open only when needed.</span>
     </fieldset>
 
     <label class="field">Maximum papers per tool

@@ -159,10 +159,9 @@ def progress(ledger):
         "count_toward_target": count, "zotero_checked": ledger["zotero_checked"],
         "in_zotero": count_status("in_zotero"),
         "possible_match": count_status("possible_match"),
-        "needs_doi": [r["key"] for r in eligible if ledger["only_not_in_zotero"]
-                      and not r.get("doi_verified")
-                      and r["zotero_status"] != "possible_match"
-                      and r["zotero_status"] != "in_zotero"],
+        "needs_doi": [r["key"] for r in eligible if not r.get("doi_verified")
+                      and (not ledger["only_not_in_zotero"]
+                           or r["zotero_status"] not in ("possible_match", "in_zotero"))],
         "uncertain_topic": sum(r.get("topic_fit") == "uncertain" for r in records),
         "coverage": coverage(records),
         "title_matches_to_review": [

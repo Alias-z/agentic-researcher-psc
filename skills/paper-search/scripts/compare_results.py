@@ -59,6 +59,13 @@ def build_comparison(ledgers, max_papers, only_not_in_zotero):
                     "source_rank": record.get("source_rank"),
                     "source_url": record.get("source_url") or record.get("source_id", ""),
                     "snippet": record.get("snippet", ""),
+                    "abstract": record.get("abstract", ""),
+                    "summary_type": record.get("summary_type", ""),
+                    "paper_summary": record.get("paper_summary", ""),
+                    "summary_basis": record.get("summary_basis", ""),
+                    "doi_status": record.get("doi_status", "verified" if record.get("doi_verified") else "unresolved"),
+                    "doi_provenance": record.get("doi_provenance", ""),
+                    "doi_reason": record.get("doi_reason", ""),
                     "zotero_status": record.get("zotero_status", "unchecked")}
                    for record in shown]
         sources.append({"tool": source, "shown": len(results),
