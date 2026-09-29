@@ -1,10 +1,6 @@
 <div align="center">
 
-<p><strong>Agentic Researcher PSC</strong></p>
-
 <h1>Routinely and automatically find papers of interest<br/>and save them to your Zotero</h1>
-
-<p>Weekly, monthly, or on a schedule you choose.</p>
 
 <p>
   <a href="workshop/setup-guide.pdf"><strong>Setup guide · PDF ↗</strong></a>
