@@ -37,14 +37,29 @@ Select the destination in Zotero desktop before activating the Connector. `POST 
 
 Before saving, establish all three independently: local reads/Connector server work, the exact writable destination is selected, and publisher tabs have the browser controls/CDP required below. Check the browser extension through the actual save interception; the helper does not test it. After a failed click, check the destination for an item before retrying. Keep metadata-only results distinct from verified PDFs.
 
-## Save
+## Process papers concurrently
+
+Use **adaptive concurrency by default**: size the pipeline according to the number of selected papers, browser responsiveness, and publisher rate limits. Honor an optional user-specified `concurrency` limit; `1` means sequential processing. Do not impose a fixed three-paper ceiling. Increase the number in flight when independent work is ready and responses remain healthy; reduce it when there are measured resource constraints or throttling. Keep the chosen visible/background tab mode. Do not run the full open → save → wait for PDF → verify cycle separately for every paper.
+
+- Resolve/create/select the destination once, then read its items with pagination and build a normalized DOI index. Deduplicate selected DOIs before scheduling them, and reserve each scheduled DOI so two jobs cannot save it.
+- Prepare independent publisher tabs concurrently: resolve missing DOIs, load pages, and read article metadata/access status. Use `Promise.allSettled` for independent tab reads where the browser API supports it, and inspect every result. A login or page challenge blocks that paper, not the other ready papers.
+- Keep collection selection and trusted Connector clicks in one sequential queue. Check the destination before each click, then use a fresh accessibility state from that exact tab. Never share a tab, temporary link ID, or accessibility index between paper jobs.
+- As soon as the matching record appears in the correct collection, queue its attachment checks and start the next ready paper. **Do not wait for that PDF to finish before proceeding.** Keep the originating tab open while the Connector is still working; navigating it to the next paper can interrupt the save.
+- Check pending records and their child attachments concurrently in short rounds while other tabs load or saves start. Read the collection once per round, then query each matched item's children independently. Match results by DOI and item key, not completion order. Refill the pipeline as papers finish; never let an entire batch wait for one slow PDF.
+- A PDF attachment may appear before its file finishes downloading. Keep checking for the saved file where local access is available. Use a bounded wait, extending it only when there is observed progress; report a remaining download as **PDF pending/unverified**, not as a confirmed absent PDF. After a failed click, check for an existing record before any retry.
+
+The Connector [creates per-page save sessions](https://github.com/zotero/zotero-connectors/blob/master/src/common/inject/pageSaving.js), and Zotero desktop [associates attachments with their save session](https://github.com/zotero/zotero/blob/master/chrome/content/zotero/xpcom/server/server_connector.js). Keep the destination fixed while these jobs are pending. This supports overlapping page preparation and attachment work; it does not require simultaneous UI clicks or direct `/connector/saveItems` calls.
+
+## Save each paper
+
+Apply these steps within the pipeline above; completion of step 6 must not block preparation or verification of other papers.
 
 1. For each selected paper, open its original publisher DOI page in the built-in browser. If a prior search result did not show a DOI, resolve the selected paper first from that source's paper detail or a title lookup corroborated by authors and year; do this only for selected papers. If the DOI cannot be resolved, report that paper as unresolved instead of guessing or saving a different work. Check the DOI, article type, access status, and requested Zotero collection. If the user requests non-open-access research, do not infer that from a PDF link alone.
 2. Check whether the DOI is already in the destination collection before saving, to avoid duplicates.
 3. Obtain that tab's `cdp` capability through `mcp__cua_repl`. Use `Runtime.evaluate` only in this publisher tab to add a temporary, visible `<a href="https://www.zotero.org/save">Save article with Zotero Connector</a>` element. Give it a unique ID and fixed positioning so the browser accessibility tree exposes it.
 4. Read a fresh `getAXState()`, locate that link by ID or accessible name, and activate it with `tab.click(index)`. This must be a real browser click: Zotero Connector requires a trusted, unmodified primary click. Do not call the DOM element's `.click()` method or use CDP to synthesize a click.
 5. Remove the temporary element with `Runtime.evaluate` after the click. If the page navigated to zotero.org, the Connector did not intercept the link; report the failure instead of claiming a save.
-6. Verify a new item with the expected DOI in the requested collection and a child attachment whose `contentType` is `application/pdf`. Report each paper as saved with PDF, saved without PDF, already present, or failed. Treat metadata-only saves as incomplete when the user requested a PDF. Avoid repeating the save blindly, which can create duplicates.
+6. Verify a new item with the expected DOI in the requested collection and a child attachment whose `contentType` is `application/pdf`. Report each paper as saved with PDF, saved without PDF, already present, failed, or PDF pending/unverified when downloading has not finished. Treat metadata-only saves as incomplete when the user requested a PDF. Avoid repeating the save blindly, which can create duplicates.
 
 Zotero's [Connector source](https://github.com/zotero/zotero-connectors/blob/master/src/common/inject/inject.jsx) documents this built-in link behavior in `_addZoteroButtonElementListener()`. Its handler accepts trusted primary clicks on `zotero.org/save` links and calls `onZoteroButtonElementClick()`, the same save action used by its toolbar button. This route does not require browser-wide CDP access or a Connector fork.
 
