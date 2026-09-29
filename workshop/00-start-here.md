@@ -45,4 +45,4 @@ For later paper reading, open **Plugins** in Codex, search `zotero`, and install
 - **paper-watch:** routinely reuse saved searches and reviewed notes, save new papers, and report relevant findings. Confirm its proposed schedule when you are ready. Scheduled runs need your computer awake, with Codex and Zotero open.
 - **Zotero plugin:** read saved papers' indexed text and use citations.
 
-**Exercises:** [Search papers and save to Zotero](01-literature-to-zotero.md).
+**Exercises:** [Workshop exercises (PDF)](exercises.pdf).

@@ -1,22 +1,59 @@
-# Agentic Researcher PSC
+<div align="center">
 
-Zurich–Basel Plant Science Center (PSC) · Research Assistants workshop · 30 September 2026.
+<p><strong>Agentic Researcher PSC</strong></p>
 
-## Student materials
+<h1>Routinely and automatically find papers of interest<br/>and save them to your Zotero</h1>
 
-1. [Setup guide (PDF)](workshop/setup-guide.pdf)
-2. [Exercises (PDF)](workshop/exercises.pdf)
-3. [Search papers and save to Zotero](workshop/01-literature-to-zotero.md)
+<p>Weekly, monthly, or on a schedule you choose.</p>
+
+<p>
+  <a href="workshop/setup-guide.pdf"><strong>Setup guide · PDF ↗</strong></a>
+  &nbsp; · &nbsp;
+  <a href="workshop/exercises.pdf"><strong>Workshop exercises · PDF ↗</strong></a>
+  &nbsp; · &nbsp;
+  <a href="#skills"><strong>Skills ↓</strong></a>
+</p>
+
+<sub>Zurich–Basel Plant Science Center · Research Assistants workshop · 30 September 2026</sub>
+
+</div>
+
+---
+
+## How it works
+
+Choose your topic of interest, Zotero collection and schedule. **@paper-watch** runs the searches automatically and saves new papers and available PDFs to that collection.
+
+```mermaid
+flowchart LR
+    A["Your topic of interest"] --> B["Routine automatic searches<br/>e.g. weekly or monthly"]
+    B --> C["Papers + available PDFs<br/>in your Zotero"]
+    classDef step fill:#eef5f4,stroke:#147477,color:#172c31;
+    classDef result fill:#147477,stroke:#147477,color:#ffffff;
+    class A,B step;
+    class C result;
+```
 
 ## Skills
 
-- [paper-search](skills/paper-search/SKILL.md): find papers using selected search tools.
-- [zotero-save](skills/zotero-save/SKILL.md): save selected papers and PDFs to Zotero.
-- [paper-reading](skills/paper-reading/SKILL.md): save Markdown reading notes, track human review, and search their Zotero copies for research discussions.
-- [paper-watch](skills/paper-watch/SKILL.md): routinely reuse saved searches and reviewed context, add new papers to Zotero, and propose context updates.
+| Skill | What it does |
+| :--- | :--- |
+| **[@paper-watch](skills/paper-watch/SKILL.md)** | Routinely finds papers of interest, saves them to your Zotero, and reports new findings. |
+| **[@paper-search](skills/paper-search/SKILL.md)** | Searches selected tools and compares their results. |
+| **[@zotero-save](skills/zotero-save/SKILL.md)** | Saves selected papers and available PDFs through Zotero Connector. |
+| **[@paper-reading](skills/paper-reading/SKILL.md)** | Reads saved papers and keeps notes you review and correct for future searches. |
 
-## Instructor materials
+## Workshop exercises
+
+1. **Find the search tools that best fit your research** by comparing their results against key papers you already know.
+2. **Improve search coverage** by testing different terms for the same question.
+3. **Keep the agent’s understanding up to date** by reviewing recent papers and correcting it with your domain expertise.
+4. **Keep your Zotero up to date** with routine automated searches that find and save new papers of interest.
+
+<details>
+<summary><strong>Instructor resources</strong></summary>
 
 - [Setup guide source](instructor/slides/setup.mjs)
 - [Exercise slides source](instructor/slides/exercises.mjs)
-- [Tested search tools](skills/paper-search/references/search-tools.md)
+
+</details>
