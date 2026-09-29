@@ -81,7 +81,7 @@ text(slide, 'Install and open these apps.', 64, 118, 1100, 42, 28);
 const apps = [
   ['Codex', 'chatgpt.com/download', 'https://chatgpt.com/download/', 'Open the desktop app, sign in, and select Codex.'],
   ['Google Chrome', 'google.com/chrome', 'https://www.google.com/chrome/', 'Install Chrome and open it once.'],
-  ['Zotero', 'zotero.org/download', 'https://www.zotero.org/download/', 'Open Zotero desktop.'],
+  ['Zotero', 'zotero.org/download', 'https://www.zotero.org/download/', 'Open Zotero 10+ to save reading notes.'],
 ];
 for (const [index, [name, label, url, action]] of apps.entries()) {
   const y = 204 + index * 135;
@@ -144,38 +144,81 @@ text(slide, 'In Zotero Settings → Advanced, enable the highlighted option.',
   64, 108, 1152, 36, 25);
 await screenshot(slide, 'zotero-local-access-marked-2026-09-28.svg', 901, 322,
   { left: 64, top: 166, width: 1152, height: 430 });
-text(slide, 'Keep Zotero desktop open so Codex can check your library and read saved text.',
+text(slide, 'Keep Zotero open. Allow “Paper Reading” to save notes when Zotero asks.',
   64, 622, 1152, 36, 25, { color: muted });
 
-slide = page('Skill installation', 'Source: workshop/00-start-here.md. Repository: https://github.com/Alias-z/agentic-researcher-psc');
-text(slide, 'In Codex, type @ and select skill-installer. Then paste:', 64, 117, 1152, 45, 28);
+slide = page('Skill installation', 'Source: workshop/00-start-here.md. Repository: https://github.com/Alias-z/agentic-researcher-psc. '
+  + 'The bundled skill-installer accepts multiple repository paths and makes skills available on the next turn. '
+  + 'If the first two skills are already installed, ask to install only skills/paper-reading. '
+  + 'Skills can be requested by name: https://learn.chatgpt.com/docs/skills-and-plugins.');
+text(slide, 'In Codex, paste this request:', 64, 117, 1152, 45, 28);
 slide.shapes.add({ geometry: 'rect',
-  position: { left: 64, top: 205, width: 1152, height: 304 },
+  position: { left: 64, top: 190, width: 1152, height: 340 },
   fill: '#F1F2F3', line: { fill: 'none', width: 0 },
 });
 const codeFont = { font: 'Courier New' };
-text(slide, 'Install skills/paper-search and skills/zotero-save from:', 92, 237, 1096, 38, 26, codeFont);
-text(slide, 'https://github.com/Alias-z/agentic-researcher-psc', 92, 302, 1096, 38, 26,
+text(slide, 'Use skill-installer to install skills/paper-search,', 92, 220, 1096, 38, 26, codeFont);
+text(slide, 'skills/zotero-save, and skills/paper-reading from:', 92, 260, 1096, 38, 26, codeFont);
+text(slide, 'https://github.com/Alias-z/agentic-researcher-psc', 92, 324, 1096, 38, 26,
   { ...codeFont, link: 'https://github.com/Alias-z/agentic-researcher-psc' });
-text(slide, 'If python3 is unavailable, use the Python executable from', 92, 381, 1096, 38, 26, codeFont);
-text(slide, 'load_workspace_dependencies for the installer.', 92, 423, 1096, 38, 26, codeFont);
-text(slide, 'To use a skill later, type @ and select paper-search or zotero-save.',
+text(slide, 'If python3 is unavailable, use the Python executable from', 92, 401, 1096, 38, 26, codeFont);
+text(slide, 'load_workspace_dependencies for the installer.', 92, 443, 1096, 38, 26, codeFont);
+text(slide, 'Then ask to use a skill by name, for example: “Use paper-reading to read…”',
   64, 560, 1152, 38, 25, { color: muted });
 
-slide = page('Zotero plugin',
+slide = page('Zotero plugin (optional)',
   'Screenshot supplied by the instructor: Screenshot 2026-09-28 at 19.08.39.png. '
   + 'Plugin installation: https://learn.chatgpt.com/docs/plugins. '
   + 'Reading and citation capabilities were checked against the installed Zotero 0.1.2 skill and helper. '
-  + 'The plugin reads indexed attachment text; it does not replace our publisher Connector/PDF save workflow. '
+  + 'The plugin provides general library searches and citation exports. paper-reading includes its own local API helper. '
   + 'The original screenshot is preserved; the SVG adds red outlines and crops the recent chat list.');
-text(slide, 'In Codex Plugins, search "zotero" and install Zotero for use in later chats.',
+text(slide, 'For citation exports, open Plugins, search "zotero", and install Zotero.',
   64, 108, 1152, 36, 25);
 await screenshot(slide, 'codex-zotero-plugin-marked-2026-09-28.svg', 1115, 340,
   { left: 64, top: 164, width: 1152, height: 385 });
-text(slide, 'paper-search finds papers; zotero-save saves selected papers and available PDFs.',
+text(slide, 'Use the plugin for general library searches and BibTeX/citation exports.',
   64, 581, 1152, 36, 25);
-text(slide, 'The Zotero plugin reads their indexed text and helps with citations.',
+text(slide, 'paper-reading can read papers and save notes without this plugin.',
   64, 625, 1152, 36, 25);
+
+slide = page('Reading always leaves notes',
+  'Sources: skills/paper-reading/SKILL.md and workshop/00-start-here.md. '
+  + 'One Markdown source file per paper; a generated HTML child note sits beside the PDF under that paper in Zotero. '
+  + 'The HTML copy links to the Markdown source. The file remains in the chosen writing/notes folder, or task deliverables. '
+  + 'Zotero searches generated note text by keyword. The Markdown file itself is not uploaded by its link. '
+  + 'Refresh the Zotero copy after manual edits; there is no background synchronization. '
+  + 'Local API writes require Zotero 10+ and application authorization: https://www.zotero.org/support/dev/web_api/v3/local_api.');
+const noteRows = [
+  ['Markdown file', 'One editable .md file per paper in your notes folder.\nKeep findings, evidence references, and LaTeX source together.'],
+  ['Zotero copy', 'A searchable note beside the PDF under the same paper.\nIts Markdown source link opens your editable file.'],
+  ['Human review', 'Saved immediately as human_reviewed: false / reading:draft.\nYour explicit content approval changes it to reviewed.'],
+];
+for (const [index, [label, detail]] of noteRows.entries()) {
+  const y = 176 + index * 145;
+  text(slide, label, 64, y, 300, 45, 30, { bold: true });
+  text(slide, detail, 385, y, 830, 94, 26);
+}
+text(slide, 'An agent revision returns the note to draft. Zotero’s Allow button grants write access.',
+  64, 628, 1152, 36, 24, { color: muted });
+
+slide = page('Try reading, review, and discussion',
+  'Source: workshop/01-literature-to-zotero.md, sections 3–5. These are example prompts; replace bracketed text. '
+  + 'Read a paper first and inspect its saved note. Only approve content after checking it against the original paper. '
+  + 'Unreviewed notes remain usable with their status stated; ask for reviewed-only evidence when desired. '
+  + 'Discussion uses keyword retrieval plus original evidence, and newly read findings are saved back to notes.');
+const prompts = [
+  ['Read', '“Use paper-reading to read [paper] in my test collection.\nSave its Markdown note and Zotero copy, then show me.”'],
+  ['Review', 'After checking the note against the paper:\n“I approve the current note for [paper]. Mark it human-reviewed.”'],
+  ['Discuss', '“Search my test collection’s notes for [topic]. Discuss [question],\ncite the evidence, and state each note’s human-review status.”'],
+];
+for (const [index, [label, detail]] of prompts.entries()) {
+  const y = 176 + index * 145;
+  text(slide, label, 64, y, 250, 45, 30, { bold: true });
+  text(slide, detail, 300, y, 916, 94, 26);
+}
+text(slide, 'Full copyable prompts are in the workshop exercise guide.',
+  64, 628, 1152, 36, 25, { color: accent,
+    link: 'https://github.com/Alias-z/agentic-researcher-psc/blob/main/workshop/01-literature-to-zotero.md' });
 
 const candidatePath = path.join(buildDir, 'candidate.pptx');
 await (await PresentationFile.exportPptx(deck)).save(candidatePath);

@@ -5,7 +5,7 @@ Zurich–Basel Plant Science Center (PSC) · Research Assistants workshop · 30 
 ## Student materials
 
 1. [Setup: Codex and skills](workshop/00-start-here.md) · [Slides (PDF)](workshop/setup-guide.pdf)
-2. [Search papers and save to Zotero](workshop/01-literature-to-zotero.md)
+2. [Search, save, read, and discuss papers](workshop/01-literature-to-zotero.md)
 
 ## Skills
 

@@ -13,7 +13,7 @@ Research checked: 28 September 2026. Session: 30 September, 10:45–13:00.
 
 | Section | Time | Content |
 | --- | --- | --- |
-| Setup | 20 min | Install apps, configure Codex's browser, install Zotero Connector, install the two skills. |
+| Setup | 20 min | Install apps, configure Codex's browser, install Zotero Connector and the three skills; introduce reading notes and human review. |
 | Stories and concepts | 25 min | OpenClaw shows what agents can do; Amazon blocking Muse introduces privacy and safety. Explain the components through our paper-search task. |
 | Exercises | 75 min | Search a topic, compare source results, select papers, save to Zotero, and check the PDFs. |
 
@@ -21,16 +21,20 @@ Allow 10 minutes for a break and 5 minutes for closing discussion. Adjust these 
 
 ## 1. Setup
 
-Use [the setup guide](../workshop/00-start-here.md) as the source. Six slides:
+Use [the setup guide](../workshop/00-start-here.md) as the source. Ten slides:
 
 1. App downloads.
 2. Data privacy and file safety, with a warning symbol and the full incident screenshot on the right.
 3. Computer Use, with the existing screenshot.
 4. Full CDP access, with the existing screenshot.
 5. Zotero Connector in Codex's browser extensions.
-6. Select `skill-installer` from the `@` menu and paste the installation prompt, displayed as a grey code block.
+6. Enable Zotero local access and explain its write-authorization dialog.
+7. Ask `skill-installer` to install `paper-search`, `zotero-save`, and `paper-reading`, with the prompt displayed as a grey code block.
+8. Optional Zotero plugin for general library searches and citation exports.
+9. Markdown reading notes, their searchable Zotero copies, and human-review status.
+10. Example prompts for reading, review, and discussion.
 
-Students finish with both skills available. Keep the full copyable prompt in the linked setup guide.
+Students finish with all three skills available. Keep the full copyable prompts in the linked setup and exercise guides. Use Zotero 10+ for saving notes through the local API. Explain that every reading saves a draft note; Zotero's authorization dialog grants application access, while explicit approval of the note's content records human review.
 
 Warning example: [Sebastien Guillemot's X thread, 26 August 2026](https://x.com/SebastienGllmt/status/2092634841863123047), read directly in Codex's built-in browser on 28 September. He reports home-directory deletion during a Claude/Fable cleanup-script test and later recovery from Git and other copies. It does not establish a whole-disk wipe or a CDP failure. The slide shows the complete original post, including its attachment and timestamp. Source attribution is in the speaker notes.
 
@@ -95,3 +99,5 @@ Use [the exercise guide](../workshop/01-literature-to-zotero.md) for copyable pr
 Students may use their own topic. Keep a tested example, such as rapid stomatal responses to changing light, ready for anyone who needs one. A comparison should hold the topic and filters constant across tools. Tool availability and search results can change; students assess the returned papers themselves.
 
 The minimum completed exercise is a source-labelled paper list and two checked Zotero records. Record PDF failures honestly. Prepare an accessible paper for students without institutional full-text access.
+
+If time permits, continue with sections 3–5 of the exercise guide: read one saved paper, inspect its Markdown file and Zotero child note, check its evidence, and discuss a research question. Human review is recorded only after students approve the actual note. This extension has no additional database setup.
