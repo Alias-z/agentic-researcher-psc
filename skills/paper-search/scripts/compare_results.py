@@ -17,6 +17,7 @@ def source_rank(record):
 
 def included(record, only_not_in_zotero):
     return (record.get("topic_fit") == "yes"
+            and not record.get("previously_reported")
             and (not only_not_in_zotero or
                  (record.get("doi_verified") is True
                   and bool(normalize_doi(record.get("doi")))

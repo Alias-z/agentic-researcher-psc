@@ -9,6 +9,7 @@ import uuid
 from pathlib import Path
 
 from zotero_check import check, first_author, normalize_doi, normalize_title
+from research_store import same_paper
 
 
 def read_json(path):
@@ -93,12 +94,14 @@ def update_statuses(ledger, index):
 def coverage(records):
     """Partition source records into exclusive buckets; cross-source overlap is separate."""
     counts = {key: 0 for key in (
-        "repeated_doi", "off_topic", "topic_unclear", "in_zotero",
+        "previously_reported", "repeated_doi", "off_topic", "topic_unclear", "in_zotero",
         "absent", "title_review", "doi_pending", "zotero_unchecked")}
     seen_dois = set()
     for record in records:
         doi = normalize_doi(record.get("doi")) if record.get("doi_verified") else ""
-        if doi and doi in seen_dois:
+        if record.get("previously_reported"):
+            bucket = "previously_reported"
+        elif doi and doi in seen_dois:
             bucket = "repeated_doi"
         elif record.get("topic_fit") == "no":
             bucket = "off_topic"
@@ -117,7 +120,7 @@ def coverage(records):
 
 def progress(ledger):
     records = ledger["records"]
-    eligible = [r for r in records if r.get("topic_fit") == "yes"]
+    eligible = [r for r in records if r.get("topic_fit") == "yes" and not r.get("previously_reported")]
     def count_status(status):
         keys = set()
         for record in eligible:
@@ -174,6 +177,8 @@ def progress(ledger):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--snapshot", type=Path)
+    parser.add_argument("--exclude-papers", type=Path,
+                        help="Previously reported paper identities from paper-watch (not a Zotero scan)")
     parser.add_argument("--ledger", required=True, type=Path)
     parser.add_argument("--source", required=True)
     parser.add_argument("--input", required=True, type=Path,
@@ -206,6 +211,11 @@ def main():
                   "only_not_in_zotero": args.only_not_in_zotero,
                   "zotero_checked": bool(args.snapshot), "records": []}
     merge_batch(ledger, batch)
+    excluded = read_json(args.exclude_papers) if args.exclude_papers else []
+    if not isinstance(excluded, list):
+        parser.error("--exclude-papers must be a JSON array")
+    for record in ledger["records"]:
+        record["previously_reported"] = any(same_paper(record, old) for old in excluded)
     update_statuses(ledger, index)
     write_private_json(args.ledger, ledger)
     print(json.dumps(progress(ledger), ensure_ascii=False))

@@ -43,7 +43,7 @@ Search reading notes with `search`, which uses `itemType=note` and `qmode=everyt
 
 Compare experimental conditions and conflicting evidence. Cite the papers and useful evidence locations. Label new interpretations; do not present them as user-reviewed conclusions. Say when the available papers cannot answer the question.
 
-Keep the cross-paper discussion in chat. Save new paper-specific findings and corrections into the corresponding Markdown notes and regenerate their Zotero copies automatically.
+Save new paper-specific findings and corrections into the corresponding Markdown notes and regenerate their Zotero copies automatically. Also preserve the evolving cross-paper understanding for later searches, following [research context](references/research-context.md). Begin with the agent's current understanding, then compare it with the selected recent papers and the user's expertise. Record what changed, why, unresolved conflicts, and the evidence. Newer publication dates alone do not settle a conflict. Drafts remain distinct from the context the user has reviewed.
 
 ## Helper commands
 

@@ -1,5 +1,7 @@
 # Candidate ledger
 
+For a confirmed routine, add `--exclude-papers RUN_HISTORY.json` from paper-watch. This filters papers already reported or queued before quotas/enrichment and does not check Zotero. Pass it again after DOI updates. Before removing temporary ledgers, preserve the final results and actual search settings using [research artifacts](research-artifacts.md).
+
 Use one temporary ledger per selected source. In **visible mode**, collect structured objects from rendered browser cards with tab-scoped CDP. In **background mode**, use official API or provider MCP responses first, with browser fallback when needed. Keep the stable paper ID or URL as `source_id` and the actual retrieval route as `retrieval_route` (`api` or `browser`). Set `source_rank` to the paper's position across pages of that route, so page 2 does not restart at rank 1. Enrich metadata without changing source ID or rank:
 
 ```json

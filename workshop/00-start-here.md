@@ -26,13 +26,14 @@ This lets Codex check your library and read saved paper text.
 
 In Codex, type `@`, select **skill-installer**, then paste:
 
-> Install `skills/paper-search`, `skills/zotero-save`, and `skills/paper-reading` from:
+> Install `skills/paper-search`, `skills/zotero-save`,
+> `skills/paper-reading`, and `skills/paper-watch` from:
 >
 > `https://github.com/Alias-z/agentic-researcher-psc`
 >
 > If `python3` is unavailable, use the Python executable from `load_workspace_dependencies` for the installer.
 
-To use a skill later, type `@` and select **paper-search**, **zotero-save**, or **paper-reading**.
+To use a skill later, type `@` and select **paper-search**, **zotero-save**, **paper-reading**, or **paper-watch**.
 
 For later paper reading, open **Plugins** in Codex, search `zotero`, and install **Zotero**. The plugin will be available in new chats.
 
@@ -40,6 +41,8 @@ For later paper reading, open **Plugins** in Codex, search `zotero`, and install
 
 - **paper-search:** find papers and DOIs.
 - **zotero-save:** save selected papers and available PDFs through Zotero Connector.
+- **paper-reading:** read saved papers and keep notes for your review.
+- **paper-watch:** routinely reuse saved searches and reviewed notes, save new papers, and report relevant findings. Confirm its proposed schedule when you are ready. Scheduled runs need your computer awake, with Codex and Zotero open.
 - **Zotero plugin:** read saved papers' indexed text and use citations.
 
 **Exercises:** [Search papers and save to Zotero](01-literature-to-zotero.md).

@@ -13,6 +13,8 @@ An explicit request to use **zotero-save** uses this workflow throughout. The op
 
 Before opening publisher tabs, ask for any missing choices in one short question and wait for the answer: which papers to save, the destination Zotero collection, and whether to use visible Codex preview tabs (recommended) or background tabs. Use choices already given without asking again. If the user says "use default tabs," use visible tabs. Do not treat papers returned by `paper-search` as automatically selected for saving.
 
+For a confirmed **paper-watch** routine, its bounded selection, exact collection/library, and tab mode already supply these choices and authorization. Do not ask again on each run. Return structured outcomes to the caller: paper identity, `added`/`already_present`/`failed`, measured item key, collection key, library, and `verified`/`pending`/`absent`/`unverified` PDF status (or the failure reason). Inspect existing records after interrupted saves before retrying. A pending-PDF followup checks that item's attachments without saving another parent item. Keep routine context proposals and human review in paper-reading.
+
 ### Check Zotero and the destination
 
 Run the bundled, non-mutating helper before publisher work, using `python3` or the Python executable from `load_workspace_dependencies` if needed:

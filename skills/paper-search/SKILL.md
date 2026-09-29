@@ -11,6 +11,8 @@ For a later request to save selected papers, use **zotero-save** and its publish
 
 ## Before searching
 
+A confirmed routine from **paper-watch** supplies the search choices and explicitly skips intake. For that route, follow [saved research and routine searches](references/research-artifacts.md); do not open a form on each scheduled run.
+
 In local Codex desktop, show the bundled [search form](assets/search-form.html) in a **visible right-side Codex browser tab** before opening any search results. Use `python3` if it is available; otherwise call `load_workspace_dependencies` and use the Python executable it returns. Run that interpreter on `scripts/intake.py --output <unique temporary JSON path>` from this skill's directory; the script uses only Python's standard library and prints a one-use `http://127.0.0.1` URL. Do not require the student to install Python. If neither interpreter is available, use the chat fallback below and say the checkbox form could not run.
 
 Open the printed URL in `@Browser` and retain the form tab binding. Get the selected in-app browser binding with `agent.browsers.get(id)` using its id from the browser inventory, set its `visibility` capability to `true`, and check that `get()` returns `true`. If it stays `false`, ask the user to show this Codex task and wait; do not ask them to fill an invisible form. After the user submits, read the JSON file and remove it, then call `await formTab.close()` on that same tab before opening any search page. Verify the form tab is gone from the browser tab list. The server exits after submission. Do not ask the user to confirm the submitted search choices or reopen the form during this search; take later corrections in chat. Prefill any topic, context, tools, tab mode, **result mode**, paper limit, or Zotero exclusion choice already supplied in the prompt using the script's matching command-line flags. The user may change those choices in the form. If all inputs were supplied and the user explicitly asks to start without the form, proceed directly.
@@ -83,3 +85,7 @@ Use **three columns** in either view: **Paper**, **Summary**, and **Source** (or
 | --- | --- | --- |
 
 Use Google Scholar and Scholar Labs through interactive search and pagination. Scholar's [official help](https://scholar.google.com/intl/en/scholar/help.html) says it does not offer bulk access and asks automated clients to respect robots.txt; do not build bulk retrieval or a page-crawling loop for either source.
+
+## Keep the results
+
+Before removing temporary ledgers, save the results, actual queries, and selected settings with [research artifacts](references/research-artifacts.md). In comparisons, save the student's preferred tools when they express a choice. In query-refinement exercises, preserve the tested alternatives and observed improvement. Add a single saved-results link beneath the tables. These files let **paper-watch** reuse the work without asking the student to enter it again.

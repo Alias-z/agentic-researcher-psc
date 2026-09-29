@@ -156,13 +156,15 @@ slide.shapes.add({ geometry: 'rect',
 });
 const codeFont = { font: 'Courier New' };
 text(slide, 'Install skills/paper-search, skills/zotero-save,', 92, 225, 1096, 38, 26, codeFont);
-text(slide, 'and skills/paper-reading from:', 92, 265, 1096, 38, 26, codeFont);
+text(slide, 'skills/paper-reading, and skills/paper-watch from:', 92, 265, 1096, 38, 26, codeFont);
 text(slide, 'https://github.com/Alias-z/agentic-researcher-psc', 92, 320, 1096, 38, 26,
   { ...codeFont, link: 'https://github.com/Alias-z/agentic-researcher-psc' });
 text(slide, 'If python3 is unavailable, use the Python executable from', 92, 381, 1096, 38, 26, codeFont);
 text(slide, 'load_workspace_dependencies for the installer.', 92, 423, 1096, 38, 26, codeFont);
-text(slide, 'To use a skill later, type @ and select paper-search, zotero-save, or paper-reading.',
-  64, 560, 1152, 38, 25, { color: muted });
+text(slide, 'To use a skill later, type @ and select its name.',
+  64, 542, 1152, 38, 25, { color: muted });
+text(slide, 'paper-watch routinely reuses saved searches and reviewed notes.\nFor scheduled runs, keep your computer awake with Codex and Zotero open.',
+  64, 592, 1152, 72, 25, { color: muted });
 
 slide = page('Zotero plugin',
   'Screenshot supplied by the instructor: Screenshot 2026-09-28 at 19.08.39.png. '
